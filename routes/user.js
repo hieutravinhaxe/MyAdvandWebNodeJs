@@ -8,7 +8,7 @@ const User = require('../models/User')
 const fs = require('fs')
 const path = require('path');
 
-const upload = multer({ dest: __dirname.split('\\').slice(0, -1).join('\\') + '/uploads/' })
+const upload = multer({ dest: __dirname.split('\\').slice(0, -1).join('\\') + './uploads/' })
 const Notify = require('../models/Notify')
 const Post = require('../models/Post')
 
