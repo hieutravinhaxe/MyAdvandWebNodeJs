@@ -11,8 +11,8 @@ const bcrypt = require('bcrypt')
 module.exports = (passport) => {
 
     passport.use(new GoogleStrategy({
-            clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            clientID: '425392378313-hiluihjf22odh19rgsqd4rgrdqvs325c.apps.googleusercontent.com',
+            clientSecret: '_JMLT69hgcGHZbiJkkI8iANe',
             callbackURL: '/auth/google/callback',
             passReqToCallback: true
         },
