@@ -1,0 +1,167 @@
+{{#if notFound}}
+    <h6>Không tồn tại trang này</h6>
+{{else}}
+
+<input hidden type="text" id="currentPage" value="{{current}}">
+<input hidden type="text" id="pages" value="{{pages}}">
+<br>
+<div class="content">
+        <div class="container">
+            <div class="content__paging">
+                <div class="page">
+                    <ul>
+                        <li class="btn-prev btn-active"><a class="fas fa-angle-left" id="btn-back"></a></li>
+                        <div class="number-page" id="number-page">
+                        {{#times pages}}
+                            <li data-page="{{this}}" class="page-number">
+                                <a href="?page={{this}}">{{this}}</a>
+                            </li>
+                        {{/times}}
+                        </div>
+                        <li class="btn-next btn-active"><a class="fas fa-angle-right" id="btn-next"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="card-header">
+
+        <i class="fas fa-table mr-1"></i> Danh sách thông báo
+    </div>
+    
+    {{#if roleOfRoom}}
+    <div class="card-header">
+<div >
+    <button data-toggle="modal" data-target="#AddNotiModal2" class="btn btn-link btn-sm order-0 order-lg-0 addNotify" id="sidebarToggle" href=""><i class="fas fa-plus"><a href=""></a></i>Thêm thông báo mới</button>
+</div>
+</div>
+{{/if}}
+
+    <div class="card-body">
+        <div class="list-tb">
+            {{#if ListNoties}}
+            {{#each ListNoties}}
+                <div id="{{this.id}}" class="card bg-light text-dark mb-3">
+                <div class="card-header tv">
+                    <i class='fas fa-clipboard'></i>
+                    <a class="titleNoty" href="/notification/noti/{{this.id}}">{{this.title}}</a>
+                </div>
+                
+                <div class="card-footer d-flex align-items-center justify-content-between"> 
+                    {{#if this.haveRole}}
+                    <div>
+                    <button data-id="{{this.id}}" class="btn btn-link order-0 order-lg-0 btnEditNoty"><a href="#"></a>Chỉnh sửa</button>
+                    <button data-id="{{this.id}}" class="btn btn-link order-0 order-lg-0 btnDeleteNoty"><a href="#"></a>Xóa</button>
+                    </div>
+                    {{/if}}
+                </div>
+                
+                </div>
+            {{/each}}
+            {{/if}}
+
+        </div>
+    </div>
+
+<!-- thêm thông báo -->
+<div class="modal fade" id="AddNotiModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Thêm thông báo mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <form class="formCreateNotify" action="" method="POST">
+                    <div class="form-label-group">
+                        <input name="title" type="text" id="inputChuDe" class="form-control" placeholder="Chủ đề" autofocus>
+                        <label for="inputChuDe"></label>
+                    </div>
+                    {{#if t}}
+
+                    <div class="form-label-group">
+                        <label for="room"></label>
+                        <select name="room" id="room" class="form-control">
+                        {{#if isAD}}
+                                <option id="CTHSSV" value="CTHSSV">Phòng CTHSSV</option>
+                            <option id="DH" value="DH">Phòng Đại học</option>
+                            <option id="SDH" value="SDH">Phòng Sau Đại học</option>
+                            <option id="DTVDM" value="DTVMT">Phòng Điện toán và máy tính</option>
+                            <option id="KT" value="KT">Phòng Khảo thí và kiểm định</option>
+                            <option id="TC" value="TC">Phòng tài chính</option>
+                            <option id="CLC" value="CLC">TDT Creative Language Center</option>
+                            <option id="TH" value="TH">Trung tâm tin học</option>
+                            <option id="SDTC" value="SDTC">Trung tâm đào tạo và phát triển xã hội</option>
+                            <option id="ATEM" value="ATEM">Trung tâm phát triển Khoa học quản lí và Ứng dụng công nghệ
+                            </option>
+                            <option id="CSV" value="CSV">Trung tâm hợp tác doanh nghiệp và cựu sinh viên</option>
+                            <option id="KL" value="KL">Khoa Luật</option>
+                            <option id="NNTHVH" value="NNTHVH">Trung tâm ngoại ngữ-tin học-bồi dưỡng văn hóa</option>
+                            <option id="KTKD" value="KTKD">Viện chính sách kinh tế và kinh doanh</option>
+                            <option id="MTCN" value="MTCN">Khoa Mỹ thuật công nghiệp</option>
+                            <option id="DDT" value="DDT">Khoa Điện-Điện tử</option>
+                            <option id="CNTT" value="CNTT">Khoa Công nghệ thông tin</option>
+                            <option id="QTKD" value="QTKD">Khoa Quản trị kinh doanh</option>
+                            <option id="MT" value="MT">Khoa Môi trường và bảo hộ lao động</option>
+                            <option id="LDCD" value="LDCD">Khoa Lao động công đoàn</option>
+                            <option id="TCNH" value="TCNH">Khoa Tài chính ngân hàng</option>
+                            <option id="GDQT" value="GDQT">Khoa Giáo dục quốc tế</option>
+                            {{else}}
+                                {{#each role}}
+                            <option id="{{this}}" value="{{this}}">{{this}}</option>
+                            {{/each}}
+                            {{/if}}
+                    </select>
+                    </div>
+
+
+                    {{/if}}
+                    <br>
+                    <div class="form-label-group">
+                        <textarea name="content" id="content" cols="30" rows="10" placeholder="Nội dung"></textarea>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-room="{{room}}" class="btn btn-primary btnCreateNotify2">Save</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- edit notify -->
+<div class="modal fade" id="editNotiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Chỉnh sửa thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                
+                <input hidden type="text" name="idNotify" id="idNotify">
+                <div class="form-label-group">
+                    <input name="editTitle" type="text" id="editTitle" class="form-control" placeholder="Chủ đề" autofocus>
+                    <label for="editChuDe"></label>
+                </div>
+                <br>
+                 <div class="form-label-group">
+                    <textarea name="editContent"  id="editContent" cols="30" rows="10" placeholder="Nội dung"></textarea>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary saveEditNotify">Save</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{{/if}}

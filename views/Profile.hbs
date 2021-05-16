@@ -1,0 +1,302 @@
+<div class="profile-container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar">
+
+                <!-- SIDEBAR USERPIC -->
+                {{#if user}}
+                <div class="profile-userpic">
+                    {{#if user._doc.image}}
+                    <span class="avatar">
+                        <img src={{user._doc.image}} class="img-responsive" alt="">
+                        {{#if t}}
+                        <div class="pen-edit">
+                            <a data-toggle="modal" data-target="#editAvatar">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                        </div>
+                        {{/if}}
+                    </span>
+                    {{else}}
+                    <span class="avatar">
+                        <img src="https://d2huw4hk7boyke.cloudfront.net/images/avatar/thumb-iwEmQvMZPWdM5o3uxoiltPlJH5rmZg3q.png"
+                            class="img-responsive" alt="">
+                        <div class="pen-edit">
+                            <a data-toggle="modal" data-target="#editAvatar">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                        </div>
+                    </span>
+                    {{/if}}
+
+                </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        {{user._doc.name}}
+                    </div>
+                    <div class="profile-usertitle-job">
+
+                        {{user._doc.email}}
+                    </div>
+                    <div class="profile-usertitle-job">
+                        {{user._doc.class}}
+                    </div>
+                    <div class="profile-usertitle-job">
+                        {{user._doc.faculty}}
+                    </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR BUTTONS -->
+                {{#if t}}
+                <div class="profile-userbuttons">
+                    <button data-image="{{user._doc.image}}" data-name="{{user._doc.name}}"
+                        data-class="{{user._doc.class}}" data-faculty="{{user._doc.faculty}}" type="button"
+                        id="editBtnProfile" class="btn btn-success btn-sm btnEditProfile">Edit</button>
+                </div>
+                {{#if isSV}}
+                {{else}}
+                <div class="profile-userbuttons">
+                    <button data-id="{{user._doc._id}}" type="button" id="btnEditPwd"
+                        class="btn btn-success btn-sm ">Change Password</button>
+                </div>
+                {{/if}}
+                {{/if}}
+            </div>
+            {{/if}}
+        </div>
+        <div class="col-md-9">
+            <input type="text" id="page" data-id="{{idClient}}" hidden>
+            <div class="profile-content">
+                <div class="loadMore">
+                    {{#if posts}}
+                    {{#each posts}}
+                    <div class="central-meta item" id="{{this._id}}">
+                        <div class="user-post">
+                            <div class="friend-info">
+                                <figure>
+                                    <img src="{{this.user.image}}" alt="">
+                                </figure>
+                                <div class="friend-name">
+                                    <div>
+                                        <a><ins>{{this.user.name}}</ins></a>
+                                        <span>{{formatDate this.createAt }}</span>
+                                    </div>
+
+                                    {{#equal this.user._id ../currentUser._id}}
+                                    <div class="icon-setting">
+                                        <a class="link"><i data-id="{{this._id}}" data-content="{{this.content}}" {{#if
+                                                this.file}} data-file="{{this.file}}" {{/if}} {{#if this.linkYoutube}}
+                                                data-linkyoutube="{{this.linkYoutube}}" {{/if}}
+                                                class="fas fa-wrench btnEditPost"></i></a>
+                                        <a class="link ml-1"><i class="fas fa-trash-alt btnDeletePost"
+                                                data-id="{{this._id}}"></i></a>
+                                    </div>
+
+                                    {{/equal}}
+
+                                </div>
+
+                                <div class="post-meta">
+                                    <div class="description">
+                                        <p>
+                                            {{this.content}}
+                                        </p>
+                                    </div>
+
+                                    {{#if this.file}}
+                                    <img src="{{this.file}}" alt="">
+                                    {{/if}}
+                                    {{#if this.linkYoutube}}
+                                    <iframe width="100%" height="315"
+                                        src="https://www.youtube.com/embed/{{this.linkYoutube}}"
+                                        title="YouTube video player" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+
+                                    {{/if}}
+
+                                </div>
+                            </div>
+                            <div class="coment-area">
+                                <ul class="we-comet">
+                                    <li>
+                                        <a data-id="{{this._id}}" class="showmore underline btnMoreCmt">more
+                                            comments</a>
+                                    </li>
+                                    {{#if this.comments}}
+                                    {{#each this.comments}}
+                                    <li class="cmtItem" style="display: none;" id="{{this._id}}">
+                                        <div class="comet-avatar">
+                                            <img src="{{this.friend._doc.image}}" alt="">
+                                        </div>
+                                        <div class="we-comment">
+                                            <div class="coment-head">
+                                                <h5><a href="/users/profile/{{this.friend._id}}"
+                                                        title="">{{this.friend._doc.name}}</a></h5>
+                                                <span>{{formatDate this.createAt}}</span>
+                                                {{#equal this.friend._doc._id ../../currentUser._id }}
+                                                <i class="fas fa-trash-alt we-reply btnDeleteComment"
+                                                    data-id="{{this._id}}" data-idpost="{{../this._id}}"></i>
+                                                {{/equal}}
+                                            </div>
+                                            <p>{{this.body}}</p>
+                                        </div>
+                                    </li>
+                                    {{/each}}
+                                    {{/if}}
+                                    <li class="post-comment">
+                                        <div class="comet-avatar">
+                                            <img src="{{../currentUser.image}}" alt="">
+                                        </div>
+                                        <div class="post-comt-box">
+                                            <textarea placeholder="Post your comment"></textarea>
+                                            <i data-id="{{this._id}}"
+                                                class="fas fa-paper-plane btn btn-default btnAddComment"></i>
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<center>
+    <strong>Powered by </strong>
+</center>
+
+<br>
+<br>
+<!-- link youtube modal -->
+<div class="modal fade" id="linkYoutubeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Link Youtube</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-label-group">
+                    <input name="email" type="text" id="inputLink" class="form-control" placeholder="Link Youtube"
+                        autofocus>
+                    <label for="inputLink"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- edit profile modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <input type="hidden" id="idUser" name="idUser">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/users/edit" method="post">
+                <div class="modal-body">
+
+                    <div class="form-label-group">
+                        <input name="name" type="text" id="inputName" class="form-control" placeholder="Name" autofocus>
+                        <label for="inputName"></label>
+                    </div>
+                    <div class="form-label-group">
+                        <input name="userClass" type="text" id="inputClass" class="form-control" placeholder="Class"
+                            autofocus>
+                        <label for="inputClass"></label>
+                    </div>
+                    <div class="form-label-group">
+                        <input name="faculty" type="text" id="inputFaculty" class="form-control" placeholder="Faculty"
+                            autofocus>
+                        <label for="inputFacuty"></label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btnSaveProfile">Save</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- change password modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <input hidden type="text" id="idUserChangePwd" name="idUserChangePwd">
+                <div class="form-label-group">
+                    <input name="newPwd" type="password" id="newPwd" class="form-control" placeholder="New password"
+                        autofocus>
+                    <label for="newPwd"></label>
+                </div>
+                <div class="form-label-group">
+                    <input name="confirmNewPwd" type="password" id="confirmNewPwd" class="form-control"
+                        placeholder="Confirm new password" autofocus>
+                    <label for="confirmNewPwd"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btnSavePassword">Save</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Modal edit avatar-->
+<div class="modal fade" id="editAvatar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <input type="hidden" id="idUser" name="idUser">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit avatar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/users/avatar" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <input name="avatar" type="file" id="avatar">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

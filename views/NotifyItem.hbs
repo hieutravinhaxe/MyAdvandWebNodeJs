@@ -1,0 +1,46 @@
+
+{{#if roleOfRoom}}
+<div class="card-header">
+<div>
+    <button data-toggle="modal" data-target="#editNotiModal2" class="btn btn-link btn-sm order-0 order-lg-0 btnEditNoty2"><a><i class="fas fa-plus"></i>Chỉnh sửa</button></a>
+</div>
+{{/if}}
+
+<div class="col-md-12">
+        <h2 class="newsTitle">{{n._doc.title}}</h2>
+        <div class="rnews-article-summary">Phòng: {{n._doc.room}}</div>
+        <br>
+        <div class="rnews-article-summary">Ngày đăng: {{#formatDate n._doc.createAt}}{{/formatDate}}</div>
+        <div class="newsContent">{{n._doc.content}}</div>
+</div>
+
+<!-- edit notify -->
+<div class="modal fade" id="editNotiModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Chỉnh sửa thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                
+                <input hidden type="text" name="idNotify2" id="idNotify2" value="{{n._doc._id}}">
+                <div class="form-label-group">
+                    <input value="{{n._doc.title}}" name="editTitle2" type="text" id="editTitle2" class="form-control" placeholder="Chủ đề" autofocus>
+                    <label for="editChuDe2"></label>
+                </div>
+                <br>
+                 <div class="form-label-group">
+                    <textarea name="editContent2" id="editContent2" cols="30" rows="10" placeholder="Nội dung">{{n._doc.content}}</textarea>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary saveEditNotify2">Save</button>
+            </div>
+            
+        </div>
+    </div>
+</div>

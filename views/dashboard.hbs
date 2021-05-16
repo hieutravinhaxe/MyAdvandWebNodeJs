@@ -1,0 +1,278 @@
+<div class="profile-container">
+    <div class="row profile">
+
+        <div class="col-md-5 mt-4">
+            <aside class="sidebar static">
+                <div class="widget">
+                    <h4 class="widget-title">THÔNG BÁO MỚI NHẤT</h4>
+                    <ul class="activitiez">
+                        {{#if noties}}
+                        {{#each noties}}
+                        <li>
+                            <div class="activity-meta">
+                                <span class="acti-room">{{this._doc.room}}</span>
+                                <br>
+                                <span class="acti-room">{{formatDate this._doc.createAt}}</span>
+                                <a href="/notification/noti/{{this._doc._id}}">
+                                    <h6>{{this._doc.title}}</h6>
+                                </a>
+                            </div>
+                        </li>
+                        {{/each}}
+                        {{/if}}
+                    </ul>
+                </div>
+                <!-- recent activites -->
+            </aside>
+        </div>
+        <input type="text" id="page" hidden>
+        <div class="col-md-7">
+            <div class="profile-post">
+                <div class="newpst-input">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div>
+                            <textarea id="content" name="content" rows="2" placeholder="write something"></textarea>
+                        </div>
+                        <div class="input-group inputYoutube">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i name="link"
+                                        class="fab fa-youtube btnLinkYoutube"></i></span>
+                            </div>
+                            <input id="linkYoutube" type="text" class="form-control" placeholder="Link Youtube"
+                                aria-label="Link Youtube">
+                        </div>
+                        <div class="picture-review-div">
+                            <img id="picture-review" class="pt-3" src="" alt="">
+                        </div>
+                        <div class="attachments">
+                            <ul>
+                                <li>
+                                    <i class="fas fa-image">
+                                        <label class="fileContainer">
+                                            <input name="file" type="file" id="inputFile" multiple>
+                                        </label>
+                                    </i>
+
+                                </li>
+                                <li>
+                                    <i name="link" class="fab fa-youtube btnYoutube"></i>
+                                </li>
+                                <li>
+                                    <button type="submit" id="btnCreatePost">Post</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="profile-content">
+                <div class="loadMore">
+
+                    <div class="central-meta item" id="new-post">
+                        <div class="user-post">
+                            <div class="friend-info">
+                                <figure>
+                                    <img id="new-post-avatar" src="{{currentUser.image}}" alt="">
+                                </figure>
+                                <div class="friend-name">
+                                    <div>
+                                        <a id="current-user-id" href="/users/profile/{{currentUser._id}}"><ins id="new-post-name">{{currentUser.name}}</ins> </a>
+                                        <span>Vừa xong</span>
+                                    </div>
+
+                                    {{!-- <div class="icon-setting">
+                                        <a class="link"><i class="fas fa-wrench"></i></a>
+                                    </div> --}}
+                                </div>
+
+                                <div class="post-meta">
+                                    <div class="description">
+                                        <p id="new-post-content">
+                                            NỘI DUNG BÀI VIẾT
+                                        </p>
+                                    </div>
+                                    <img id="new-post-image" src="{{currentUser.image}}" alt="">
+                                </div>
+                            </div>
+                            <div class="coment-area">
+                                <ul class="we-comet">
+                                    <li class="post-comment">
+                                        <div class="comet-avatar">
+                                            <img src="{{currentUser.image}}" alt="">
+                                        </div>
+                                        <div class="post-comt-box">
+                                            <form method="post">
+                                                <textarea placeholder="Post your comment"></textarea>
+                                                <div class="add-smiles">
+                                                    <span class="em em-expressionless" title="add icon"></span>
+                                                </div>
+                                                <button class="btn btn-default" type="submit">Bình luận</button>
+                                            </form>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{#if posts}}
+                    {{#each posts}}
+                    <div class="central-meta item" id="{{this._id}}">
+                        <div class="user-post">
+                            <div class="friend-info">
+                                <figure>
+                                    <img src="{{this.user.image}}" alt="">
+                                </figure>
+                                <div class="friend-name">
+                                    <div>
+                                        <a href="/users/profile/{{this.user._id}}"><ins>{{this.user.name}}</ins></a>
+                                        <span>{{formatDate this.createAt }}</span>
+                                    </div>
+                                    
+                                    {{#equal this.user._id ../currentUser._id}}
+                                    <div class="icon-setting">
+                                        <a class="link"><i data-id="{{this._id}}" data-content="{{this.content}}" {{#if
+                                                this.file}} data-file="{{this.file}}" {{/if}} {{#if this.linkYoutube}}
+                                                data-linkyoutube="{{this.linkYoutube}}" {{/if}}
+                                                class="fas fa-wrench btnEditPost"></i></a>
+                                        <a class="link ml-1"><i class="fas fa-trash-alt btnDeletePost"
+                                                data-id="{{this._id}}"></i></a>
+                                    </div>
+
+                                    {{/equal}}
+
+                                </div>
+
+                                <div class="post-meta">
+                                    <div class="description">
+                                        <p>
+                                            {{this.content}}
+                                        </p>
+                                    </div>
+
+                                    {{#if this.file}}
+                                    <img src="{{this.file}}" alt="">
+                                    {{/if}}
+                                    {{#if this.linkYoutube}}
+                                    <iframe width="100%" height="315"
+                                        src="https://www.youtube.com/embed/{{this.linkYoutube}}"
+                                        title="YouTube video player" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+
+                                    {{/if}}
+
+                                </div>
+                            </div>
+                            <div class="coment-area">
+                                <ul class="we-comet">
+                                    <li>
+                                        <a data-id="{{this._id}}" title="" class="showmore underline btnMoreCmt">more
+                                            comments</a>
+                                    </li>
+                                    {{#if this.comments}}
+                                    {{#each this.comments}}
+                                    <li class="cmtItem" style="display: none;" id="{{this._id}}">
+                                        <div class="comet-avatar">
+                                            <img src="{{this.friend._doc.image}}" alt="">
+                                        </div>
+                                        <div class="we-comment">
+                                            <div class="coment-head">
+                                                <h5><a href="/users/profile/{{this.friend._id}}" title="">{{this.friend._doc.name}}</a></h5>
+                                                <span>{{formatDate this.createAt}}</span>
+                                                
+                                                {{#equal this.friend._doc._id ../../currentUser._id }}
+                                                <i class="fas fa-trash-alt we-reply btnDeleteComment"
+                                                        data-id="{{this._id}}" data-idpost="{{../this._id}}"></i>
+                                                {{/equal}}
+                                            </div>
+                                            <p>{{this.body}}</p>
+                                        </div>
+                                    </li>
+                                    {{/each}}
+                                    {{/if}}
+                                    <li class="post-comment">
+                                        <div class="comet-avatar">
+                                            <img src="{{../currentUser.image}}" alt="">
+                                        </div>
+                                        <div class="post-comt-box">
+                                            <textarea placeholder="Post your comment"></textarea>
+                                            <i data-id="{{this._id}}"
+                                                class="fas fa-paper-plane btn btn-default btnAddComment"></i>
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+
+        <!-- sidebar -->
+    </div>
+</div>
+<center>
+    <strong>Powered by </strong>
+</center>
+
+
+<!-- edit post modal -->
+<div class="modal fade" id="editPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <input type="hidden" id="idUser" name="idUser">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="profile-post">
+                    <div class="newpst-input">
+
+                        <div>
+                            <textarea id="contentModal" name="contentModal" rows="2"></textarea>
+                        </div>
+                        <div class="input-group inputYoutubeModal">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i name="link"
+                                        class="fab fa-youtube btnLinkYoutube"></i></span>
+                            </div>
+                            <input id="linkYoutubeModal" type="text" class="form-control" placeholder="Link Youtube"
+                                aria-label="Link Youtube">
+                        </div>
+                        <div class="picture-review-div-modal">
+                            <img id="picture-review-modal" class="pt-3" src="" alt="">
+                        </div>
+                        <div class="attachments">
+                            <ul>
+                                <li>
+                                    <i class="fas fa-image">
+                                        <label class="fileContainer">
+                                            <input type="file" id="inputFileModal" multiple>
+                                        </label>
+                                    </i>
+
+                                </li>
+                                <li>
+                                    <i name="link" class="fab fa-youtube btnYoutubeModal"></i>
+                                </li>
+                                <li>
+                                    <button class="btnSaveChangePost">Save</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
