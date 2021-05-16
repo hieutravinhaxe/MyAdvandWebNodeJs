@@ -13,8 +13,11 @@ const fs = require('fs')
 const moment = require('moment');
 const socketio = require('socket.io')
 const { ensureAuth } = require('./midlleware/auth');
+const https = require('https')
 
 const app = express();
+
+const server = https.Server(app)
 
 //MongoDB connect
 db.connect();
@@ -102,7 +105,7 @@ app.use('/notification', require('./routes/notification'))
 
 const PORT = process.env.PORT || 3000
 
-const httpServer = app.listen(PORT, () => {
+const httpServer = server.listen(PORT, () => {
     console.log('http://localhost:' + PORT);
 });
 
