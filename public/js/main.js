@@ -88,7 +88,7 @@ $(document).ready(function() {
                 Password: password,
                 Role: selectedValues
             })
-            fetch('http://localhost:3000/admin/add', {
+            fetch('https://socialstdportal1820.herokuapp.com/admin/add', {
                     method: 'POST',
                     body: data,
                     headers: {
@@ -159,7 +159,7 @@ $(document).ready(function() {
                     editEmail: email
                 })
                 //console.log(title, content)
-            fetch('http://localhost:3000/admin/edit', {
+            fetch('https://socialstdportal1820.herokuapp.com/admin/edit', {
                     method: 'POST',
                     body: data,
                     headers: {
@@ -212,7 +212,7 @@ $(document).ready(function() {
                 comment: comment
             })
             //console.log(comment)
-        fetch('http://localhost:3000/post/comment', {
+        fetch('https://socialstdportal1820.herokuapp.com/post/comment', {
                 method: 'POST',
                 body: data,
                 headers: {
@@ -309,7 +309,7 @@ $(document).ready(function() {
                 id: id,
                 newPwd: newPwd
             })
-            fetch('http://localhost:3000/users/changePwd', {
+            fetch('https://socialstdportal1820.herokuapp.com/users/changePwd', {
                     method: 'POST',
                     body: data,
                     headers: {
@@ -345,7 +345,7 @@ $(document).ready(function() {
                 content: content
             })
             //console.log(title, content, id)
-        fetch('http://localhost:3000/notification/noti/edit', {
+        fetch('https://socialstdportal1820.herokuapp.com/notification/noti/edit', {
                 method: 'POST',
                 body: data,
                 headers: {
@@ -381,7 +381,7 @@ $(document).ready(function() {
             title: title,
             content: content
         })
-        fetch('http://localhost:3000/notification/noti/edit', {
+        fetch('https://socialstdportal1820.herokuapp.com/notification/noti/edit', {
                 method: 'POST',
                 body: data,
                 headers: {
@@ -413,7 +413,7 @@ $(document).ready(function() {
             let btn = e.target
             let id = btn.dataset.id
             console.log(id)
-            fetch(`http://localhost:3000/notification/noty/${id}`, {
+            fetch(`https://socialstdportal1820.herokuapp.com/notification/noty/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -446,7 +446,7 @@ $(document).ready(function() {
         //                 id: id
         //             })
         //             //console.log(title, content)
-        //         fetch('http://localhost:3000/notification/delete', {
+        //         fetch('https://socialstdportal1820.herokuapp.com/notification/delete', {
         //                 method: 'POST',
         //                 body: data,
         //                 headers: {
@@ -491,7 +491,7 @@ $(document).ready(function() {
                     room: room,
                 })
                 //console.log(title, content)
-            fetch('http://localhost:3000/notification', {
+            fetch('https://socialstdportal1820.herokuapp.com/notification', {
                     method: 'POST',
                     body: data,
                     headers: {
@@ -533,7 +533,7 @@ $(document).ready(function() {
                 content: content
             })
             //console.log(title, content, id)
-        fetch('http://localhost:3000/notification/noti/edit', {
+        fetch('https://socialstdportal1820.herokuapp.com/notification/noti/edit', {
                 method: 'POST',
                 body: data,
                 headers: {
@@ -588,7 +588,7 @@ $(document).ready(function() {
                     room: room,
                 })
                 //console.log(title, content)
-            fetch('http://localhost:3000/notification', {
+            fetch('https://socialstdportal1820.herokuapp.com/notification', {
                 method: 'POST',
                 body: data,
                 headers: {
@@ -701,7 +701,7 @@ $(document).ready(function() {
             formData.set('linkYoutube', linkYoutube)
 
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:3000/post/add', true)
+            xhr.open('POST', 'https://socialstdportal1820.herokuapp.com/post/add', true)
             xhr.addEventListener('load', e => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     let json = JSON.parse(xhr.responseText)
@@ -740,7 +740,7 @@ $(document).ready(function() {
             formData.set('linkYoutube', linkYoutube)
 
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:3000/post/edit', true)
+            xhr.open('POST', 'https://socialstdportal1820.herokuapp.com/post/edit', true)
             xhr.addEventListener('load', () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     let json = JSON.parse(xhr.responseText)
@@ -857,7 +857,7 @@ function showComment(id) {
 function loadMore(id) {
 
     if (!id) {
-        fetch(`http://localhost:3000/loadmore?page=${pageNumber}`, {
+        fetch(`https://socialstdportal1820.herokuapp.com/loadmore?page=${pageNumber}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -879,7 +879,7 @@ function loadMore(id) {
             })
             .catch(e => console.log(e))
     } else {
-        fetch(`http://localhost:3000/loadmoreprofile?page=${pageNumber}&id=${id}`, {
+        fetch(`https://socialstdportal1820.herokuapp.com/loadmoreprofile?page=${pageNumber}&id=${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1049,7 +1049,7 @@ function deleteNotify(e) { //xóa thông báo trong room
                 id: id
             })
             //console.log(title, content)
-        fetch('http://localhost:3000/notification/delete', {
+        fetch('https://socialstdportal1820.herokuapp.com/notification/delete', {
                 method: 'POST',
                 body: data,
                 headers: {
@@ -1079,7 +1079,7 @@ function addNotify(e) { //thêm thông báo trong room
     let btn = e.target
     let id = btn.dataset.id
         //console.log(id)
-    fetch(`http://localhost:3000/notification/noty/${id}`, {
+    fetch(`https://socialstdportal1820.herokuapp.com/notification/noty/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -1109,7 +1109,7 @@ function addComment(id) {
     let body = $(queryComment).val()
 
     if (body) {
-        fetch('http://localhost:3000/comment/add', {
+        fetch('https://socialstdportal1820.herokuapp.com/comment/add', {
             method: 'POST',
             body: JSON.stringify({ body, id }),
             headers: {
@@ -1182,7 +1182,7 @@ function displayComment(comment, id) {
 function deleteComment(id, idpost) {
     let result = confirm("Bạn có muốn xóa bình luận");
     if (result) {
-        fetch(`http://localhost:3000/comment/delete?idpost=${idpost}&id=${id}`, {
+        fetch(`https://socialstdportal1820.herokuapp.com/comment/delete?idpost=${idpost}&id=${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1399,7 +1399,7 @@ function delelePost(id) {
     let result = confirm("Bạn có muốn xóa bài viết");
     if (result) {
 
-        fetch('http://localhost:3000/post/delete?id=' + id, {
+        fetch('https://socialstdportal1820.herokuapp.com/post/delete?id=' + id, {
                 method: 'GET',
                 // body: id,
                 headers: {
