@@ -39,7 +39,7 @@ module.exports = (passport) => {
                     done(null, user)
                 } else {
                     // creat user folder by email 
-                    let folder = __dirname.split('\\').slice(0, -1).join('\\') + 'app/public/uploads/' + newUser.email
+                    let folder = __dirname.split('\\').slice(0, -1).join('\\') + './public/uploads/' + newUser.email
 
                     fs.mkdirSync(folder, err => {
                         if (err) {
