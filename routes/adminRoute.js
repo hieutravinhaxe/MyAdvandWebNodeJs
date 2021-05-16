@@ -64,8 +64,8 @@ router.post('/add', ensureAuth, (req, res) => {
             })
 
             // create user folder by email 
-            let folder = __dirname.split('\\').slice(0, -1).join('\\') + '/public/uploads/' + user.email
-            console.log(folder);
+            let folder = __dirname.split('\\').slice(0, -1).join('\\') + 'app/public/uploads/' + user.email
+                //console.log(folder);
             fs.mkdir(folder, err => {
                 if (err) {
                     console.error(err);
