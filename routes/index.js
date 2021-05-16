@@ -13,11 +13,11 @@ router.get('/', ensureAuth, (req, res) => {
     });
 
     const currentUser = {
-        name: req.user.name,
-        _id: req.user._id,
-        image: req.user.image
-    }
-    console.log(currentUser);
+            name: req.user.name,
+            _id: req.user._id,
+            image: req.user.image
+        }
+        //console.log(currentUser);
 
     let noties = undefined
     Notify.find().sort({ createAt: -1 }).limit(10)

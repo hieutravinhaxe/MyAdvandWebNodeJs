@@ -11,12 +11,12 @@ const bcrypt = require('bcrypt')
 module.exports = (passport) => {
 
     passport.use(new GoogleStrategy({
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/auth/google/callback',
-        passReqToCallback: true
-    },
-        async (req, acessToken, refreshToken, profile, done) => {
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            callbackURL: '/auth/google/callback',
+            passReqToCallback: true
+        },
+        async(req, acessToken, refreshToken, profile, done) => {
 
             const newUser = {
                 googleID: profile.id,
@@ -39,7 +39,7 @@ module.exports = (passport) => {
                     done(null, user)
                 } else {
                     // creat user folder by email 
-                    let folder = __dirname.split('\\').slice(0, -1).join('\\') + '/public/uploads/' + newUser.email
+                    let folder = __dirname.split('\\').slice(0, -1).join('\\') + 'app/public/uploads/' + newUser.email
 
                     fs.mkdirSync(folder, err => {
                         if (err) {
@@ -85,12 +85,12 @@ module.exports = (passport) => {
         })
     )
 
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser(function(user, done) {
         done(null, user);
     });
 
-    passport.deserializeUser(function (id, done) {
-        User.findById(id, function (err, user) {
+    passport.deserializeUser(function(id, done) {
+        User.findById(id, function(err, user) {
             done(err, user);
         });
     });

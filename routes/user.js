@@ -22,19 +22,6 @@ router.get('/logout', (req, res) => {
     res.redirect('/users/login');
 })
 
-/*
-router.post('/login', (req, res, next) => {
-    if (req.body.email === '' || req.body.password === '') {
-        req.flash('error', 'Vui lòng nhập đầy đủ thông tin')
-        return res.redirect('/users/login')
-    } else {
-        passport.authenticate('local', { failureFlash: true, failureRedirect: '/users/login', successRedirect: '/' })
-            (req, res, next)
-    }
-
-})
-*/
-
 // Change password
 router.post('/changePwd', ensureAuth, (req, res) => {
 
@@ -60,45 +47,7 @@ router.get('/profile', ensureAuth, (req, res) => {
 
     res.redirect(`/users/profile/${req.user.id}`)
 
-    // let isAD = false //xét hiện admin/add ở layout
-    // req.user.role.forEach(item => {
-    //     if (item === 'AD') {
-    //         isAD = true
-    //     }
-    // })
-    // let success = req.flash('success') || ''
-    // const currentUser = {
-    //     name: req.user.name,
-    //     _id: req.user._id,
-    //     image: req.user.image
-    // }
 
-    // let t = true;
-    // Post.find({ user: req.user.id }).sort({ createAt: -1 }).populate('user', 'name image _id').populate({
-    //         path: 'comments',
-    //         populate: { path: 'friend', select: 'name image _id' }
-    //     }).lean()
-    //     .then(p => {
-    //         User.findOne({ _id: req.user.id })
-    //             .then(u => {
-    //                 if (u) {
-    //                     //console.log(listPost)
-    //                     return res.render('Profile', { isAD, user: u, t, success, posts: p, currentUser })
-    //                 } else {
-    //                     return res.json({ code: 404, message: 'Không tìm thấy người dùng' })
-    //                 }
-    //             })
-    //             .catch(e => {
-    //                 if (e.message.includes('Cast to ObjectId failed')) {
-    //                     return res.json({ code: 404, message: "id không hợp lệ" })
-    //                 }
-    //                 return res.json({ code: 202, messagee: e.message })
-    //             })
-    //     })
-    //     .catch(e => {
-    //         console.log(e);
-    //         return res.send('fail')
-    //     })
 })
 
 router.get('/profile/:id', ensureAuth, (req, res) => {
